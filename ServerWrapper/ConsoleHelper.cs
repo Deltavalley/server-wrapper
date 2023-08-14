@@ -13,10 +13,10 @@ namespace ServerWrapper
 		/// </summary>
 		/// <typeparam name="T">The type of the input to return</typeparam>
 		/// <returns></returns>
-		public static T VerifyConsoleInput<T>(string prompt, Predicate<string> isValid, Converter<string,T> converter)
+		public static T VerifyConsoleInput<T>(string prompt, Predicate<string> isValid, Converter<string,T> converter, bool isOptional = false)
 		{
 			//add null check to the predicate in
-			Predicate<string> isValidNotEmpty = (string y) => { return !string.IsNullOrEmpty(y) && isValid(y); };
+			Predicate<string> isValidNotEmpty = (string y) => { return !string.IsNullOrEmpty(y) && isValid(y) || isOptional; };
 
 			//write the prompt
 			Console.Write($"{prompt}");
@@ -68,10 +68,10 @@ namespace ServerWrapper
 			Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
 		}
 
-		public static string VerifyConsoleInput(string prompt, Predicate<string> isValid)
+		public static string VerifyConsoleInput(string prompt, Predicate<string> isValid, bool isOptional = false)
 		{
 			Converter<string, string> dummyConverter = (string x) => x;
-			return VerifyConsoleInput(prompt,isValid,dummyConverter);
+			return VerifyConsoleInput(prompt,isValid,dummyConverter, isOptional);
 		}
 	}
 }

@@ -23,20 +23,21 @@ namespace ServerWrapper
 
 		public static Config GenerateConfig()
 		{
-			Console.WriteLine("Generating config file . . .");
+			//Console.WriteLine("Generating config file . . .");
 
 			//generate and return a new config specified by the user
 			Config config = new();
 
-			Predicate<string> javaPathPredicate = (x) =>
+			Predicate<string> javaPathIsValid = (x) =>
 			{
-				return x == "java" || File.Exists($"{x}\\bin\\java.exe");
+				return x == "" || File.Exists($"{x}");
 			};
-			config.javaPath = VerifyConsoleInput("Input java root path (type \"java\" without the quotes if you dont know): ", javaPathPredicate);
+			Converter<string, string> convertBlank = (x) => { return (x == "") ? "java" : x; };
+			config.javaPath = VerifyConsoleInput("Input java.exe full path (optional):", javaPathIsValid, convertBlank, true);
 
-			config.useAikarsFlags = VerifyConsoleInput("Use Aikar's flags? (true/false) ", (string x) => bool.TryParse(x, out _), (string x) => bool.Parse(x));
+			config.useAikarsFlags = VerifyConsoleInput("Use Aikar's flags? (true/false):", (string x) => bool.TryParse(x, out _), (string x) => bool.Parse(x));
 
-			Predicate<string> memoryPredicate = (string x) =>
+			Predicate<string> memoryIsValid = (string x) =>
 			{
 				int num;
 				if (int.TryParse(x, out num))
@@ -45,7 +46,7 @@ namespace ServerWrapper
 				}
 				return false;
 			};
-			config.memoryGB = VerifyConsoleInput("Memory (GB): ", memoryPredicate, (string x) => int.Parse(x));
+			config.memoryGB = VerifyConsoleInput("Memory (GB):", memoryIsValid, (string x) => int.Parse(x));
 
 			Serializer serializer = new Serializer();
 			string configString = serializer.Serialize(config);
