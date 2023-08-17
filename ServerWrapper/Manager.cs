@@ -174,12 +174,13 @@ namespace ServerWrapper
 		static bool IsNewServer()
 		{
 			//checks if a config file already exists, if it does, a server is also assumed to exist
-			return Directory.GetFiles(".", "wrapper-config.yml", SearchOption.TopDirectoryOnly).Length == 0;
+			return Directory.GetFiles(".", CONFIG_NAME, SearchOption.TopDirectoryOnly).Length == 0;
 		}
 
 		static void Splash()
 		{
 			Console.WriteLine($"----------- Minecraft Server Wrapper v{VERSION} -----------\n");
+			Console.WriteLine($"To reset the wrapper, delete the \"{CONFIG_NAME}\" file.\n");
 			Console.WriteLine($"By Deltavalley\n\n\n");
 			Console.WriteLine($"Press any key to begin . . .");
 			Console.ReadKey(true);

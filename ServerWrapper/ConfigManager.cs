@@ -30,7 +30,7 @@ namespace ServerWrapper
 
 			Predicate<string> javaPathIsValid = (x) =>
 			{
-				return x == "" || File.Exists($"{x}");
+				return x == "" || File.Exists(x);
 			};
 			Converter<string, string> convertBlank = (x) => { return (x == "") ? "java" : x; };
 			config.javaPath = VerifyConsoleInput("Input java.exe full path (optional):", javaPathIsValid, convertBlank, true);

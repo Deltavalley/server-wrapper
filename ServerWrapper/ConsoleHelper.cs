@@ -10,13 +10,15 @@ namespace ServerWrapper
 	{
 		/// <summary>
 		/// Verifies a console input matches the required type
+		/// <para><paramref name="prompt"/>: the prompt without a space at the end.</para>
 		/// </summary>
 		/// <typeparam name="T">The type of the input to return</typeparam>
 		/// <returns></returns>
 		public static T VerifyConsoleInput<T>(string prompt, Predicate<string> isValid, Converter<string,T> converter, bool isOptional = false)
 		{
+			prompt += " ";
 			//add null check to the predicate in
-			Predicate<string> isValidNotEmpty = (string y) => { return !string.IsNullOrEmpty(y) && isValid(y) || isOptional; };
+			Predicate<string> isValidNotEmpty = (string y) => { return (!string.IsNullOrEmpty(y) && isValid(y)) || (isOptional && string.IsNullOrEmpty(y)); };
 
 			//write the prompt
 			Console.Write($"{prompt}");
