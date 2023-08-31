@@ -1,4 +1,7 @@
-A program that wraps minecraft servers and acts as an advanced start.bat script that you typically have to make yourself.
+# Purpose
+A program that wraps minecraft servers and acts as an advanced start script that you typically have to make yourself.
+
+# Features
 
 - New servers choose a MC version which is automatically downloaded from [PaperMC](https://papermc.io/downloads/paper)
 - Agree to the EULA without starting the server first
